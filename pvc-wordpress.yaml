@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sjlee-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: azurefile
+  # PVC Kind // Standard: default ,Premium: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
+
