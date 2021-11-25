@@ -31,20 +31,11 @@ spec:
         app: wordpress
     spec:
       containers:
-        - image: wordpress
+        - image: sjleeacr.azurecr.io/wordpress:v1
           name: wordpress
           ports:
           - containerPort: 80
             name: wordpress
-          env:
-          - name: WORDPRESS_DB_NAME
-            value: wordpress
-          - name: WORDPRESS_DB_USER
-            value: sjlee
-          - name: WORDPRESS_DB_HOST
-            value: sjlee-db.mysql.database.azure.com
-          - name: WORDPRESS_DB_PASSWORD
-            value: flash15!
             # wordpress wp-config.php
           resources:
             requests:
