@@ -1,0 +1,92 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wordpress-hpa
+spec:
+  maxReplicas: 5
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: wordpress-deployment
+  targetCPUUtilizationPercentage: 70
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  strategy:
+    type: Recreate
+    # deployment distribution
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+        - image: wordpress
+          name: wordpress
+          ports:
+          - containerPort: 80
+            name: wordpress
+          env:
+          - name: WORDPRESS_DB_NAME
+            value: wordpress
+          - name: WORDPRESS_DB_USER
+            value: sjlee
+          - name: WORDPRESS_DB_HOST
+            value: sjlee-db.mysql.database.azure.com
+          - name: WORDPRESS_DB_PASSWORD
+            value: flash15!
+            # wordpress wp-config.php
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+              # hpa resource
+          volumeMounts:
+            - name: volume # azurefile -> type: volume / azuredisk -> type: volume
+              mountPath: /var/www/html
+              # pvc mount
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: sjlee-pvc # PVC name
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-service
+  labels:
+    app: wordpress
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sjlee-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: azurefile
+  # PVC Kind // Standard: default ,Premium: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
