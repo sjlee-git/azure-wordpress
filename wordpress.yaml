@@ -36,6 +36,15 @@ spec:
           ports:
           - containerPort: 80
             name: wordpress
+          # env:
+          # - name: WORDPRESS_DB_NAME
+          #   value: wordpress
+          # - name: WORDPRESS_DB_USER
+          #   value: sjlee
+          # - name: WORDPRESS_DB_HOST
+          #   value: sjlee-db.mysql.database.azure.com
+          # - name: WORDPRESS_DB_PASSWORD
+          #   value: flash15!
             # wordpress wp-config.php
           resources:
             requests:
@@ -45,14 +54,14 @@ spec:
               memory: "1Gi"
               cpu: "500m"
               # hpa resource
-#          volumeMounts:
-#            - name: volume # azurefile -> type: volume / azuredisk -> type: volume
-#              mountPath: /var/www/html
-              # pvc mount
-#      volumes:
-#        - name: volume
-#          persistentVolumeClaim:
-#            claimName: sjlee-pvc # PVC name
+      #     volumeMounts:
+      #       - name: volume # azurefile -> type: volume / azuredisk -> type: volume
+      #         mountPath: /var/www/html
+      #         # pvc mount
+      # volumes:
+      #   - name: volume
+      #     persistentVolumeClaim:
+      #       claimName: sjlee-pvc # PVC name
 
 ---
 apiVersion: v1
