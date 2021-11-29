@@ -1,9 +1,9 @@
-apiVersion: autoscaling/v1
+piVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: wordpress-hpa
 spec:
-  maxReplicas: 5
+  maxReplicas: 6
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
@@ -31,7 +31,7 @@ spec:
         app: wordpress
     spec:
       containers:
-        - image: sjleeacr.azurecr.io/wordpress:v1
+        - image: sjleeacr.azurecr.io/mywordpress
           name: wordpress
           ports:
           - containerPort: 80
@@ -53,15 +53,15 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
-              # hpa resource
-          volumeMounts:
-            - name: volume # azurefile -> type: volume / azuredisk -> type: volume
-              mountPath: /var/www/html
-              # pvc mount
-      volumes:
-        - name: volume
-          persistentVolumeClaim:
-            claimName: sjlee-pvc # PVC name
+      #     # hpa resource
+      #     volumeMounts:
+      #       - name: volume # azurefile -> type: volume / azuredisk -> type: volume
+      #         mountPath: /var/www/html
+      #         # pvc mount
+      # volumes:
+      #   - name: volume
+      #     persistentVolumeClaim:
+      #       claimName: sjlee-pvc # PVC name
 
 ---
 apiVersion: v1

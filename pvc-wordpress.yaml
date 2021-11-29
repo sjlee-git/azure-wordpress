@@ -4,10 +4,9 @@ metadata:
   name: sjlee-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: azurefile
+    - ReadWriteMany
+  storageClassName: sjleestc
   # PVC Kind // Standard: default ,Premium: managed-premium
   resources:
     requests:
       storage: 5Gi
-
