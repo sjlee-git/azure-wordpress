@@ -1,9 +1,9 @@
-piVersion: autoscaling/v1
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: wordpress-hpa
 spec:
-  maxReplicas: 6
+  maxReplicas: 8
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
@@ -31,7 +31,7 @@ spec:
         app: wordpress
     spec:
       containers:
-        - image: sjleeacr.azurecr.io/mywordpress
+        - image: sjleeacr.azurecr.io/wordpress
           name: wordpress
           ports:
           - containerPort: 80
