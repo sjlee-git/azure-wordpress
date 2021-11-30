@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "*.sjlee.pw"
+        - "www.sjlee.pw"
       secretName: sjlee-tls
   rules:
-    - host: "*.sjlee.pw"
+    - host: "www.sjlee.pw"
     - http:
         paths:
           - pathType: Prefix

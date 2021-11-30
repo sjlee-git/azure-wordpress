@@ -9,7 +9,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: wordpress-deployment
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 30
 --- # HPA
 apiVersion: apps/v1
 kind: Deployment
